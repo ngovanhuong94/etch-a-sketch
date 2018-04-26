@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+	<div class="red-background">
+		<h1>Etch a Sketch</h1>
+		<div class="container">
+			<!--  -->
+			<!-- <div class="grid-box"></div> -->
+			<!--  -->
+		</div>
+		<div class="buttons">
+			<button class="btn reset">Reset</button>
+			<button class="btn rainbow">Rainbow</button>
+			<button class="btn dark">Dark</button>	
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript">
+		var reset_button = document.querySelector('.reset');
+		var container = document.querySelector('.container');
+		var rainbow = 1;
+		reset_button.addEventListener('click', function (e) {
+			var count_columns = prompt('How many squares per side');
+			container.innerHTML = '';
+			container.setAttribute('style', `grid-template-columns: repeat(${count_columns},auto)`);
+			for(var i = 0; i <count_columns*count_columns; i++) {
+				var new_grid_box = document.createElement('div')
+				new_grid_box.onmouseover = rainbow == 1 ? generateColor : makeDarker;
+				new_grid_box.classList.add('grid-box');
+				container.appendChild(new_grid_box);
+			}
+		})
+
+		function generateColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++ ) {
+			    color += letters[Math.round(Math.random() * 15)];
+			}
+			this.style.background = color;
+		}
+
+		function makeDarker() {
+			this.style.background = 'black';
+			this.style.opacity = Number(this.style.opacity) + 0.1;
+		}
+		
+		document.querySelector('.rainbow').onclick = function () {
+			rainbow = 1;
+			container.innerHTML = '';
+		}
+
+		document.querySelector('.dark').onclick = function () {
+			rainbow = 0;
+			container.innerHTML = '';
+		}
+	</script>
+</body>
+</html>
